@@ -571,6 +571,9 @@ func (r *OVNControllerReconciler) reconcileNormal(ctx context.Context, instance 
 
 	if instance.Status.NumberReady == instance.Status.DesiredNumberScheduled {
 		instance.Status.Conditions.MarkTrue(condition.DeploymentReadyCondition, condition.DeploymentReadyMessage)
+		if instance.Status.ObservedGeneration != instance.Generation {
+			instance.Status.ObservedGeneration = instance.Generation
+		}
 	}
 	// create DaemonSet - end
 
